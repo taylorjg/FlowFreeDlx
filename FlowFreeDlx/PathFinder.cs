@@ -1,68 +1,39 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace FlowFreeDlx
 {
     public class PathFinder
     {
-        public static IList<IList<Coords>> FindAllPaths(Grid grid, Coords startCoords, Coords endCoords)
+        public static Paths FindAllPaths(Grid grid, Coords startCoords, Coords endCoords)
         {
-            var paths = new List<IList<Coords>>();
+            var paths = new Paths();
 
-            FollowPath(grid, paths, new List<Coords> {startCoords}, endCoords, Direction.Up);
-            FollowPath(grid, paths, new List<Coords> {startCoords}, endCoords, Direction.Down);
-            FollowPath(grid, paths, new List<Coords> {startCoords}, endCoords, Direction.Left);
-            FollowPath(grid, paths, new List<Coords> {startCoords}, endCoords, Direction.Right);
+            FollowPath(grid, paths, Path.PathWithStartingPoint(startCoords), endCoords, Direction.Up);
+            FollowPath(grid, paths, Path.PathWithStartingPoint(startCoords), endCoords, Direction.Down);
+            FollowPath(grid, paths, Path.PathWithStartingPoint(startCoords), endCoords, Direction.Left);
+            FollowPath(grid, paths, Path.PathWithStartingPoint(startCoords), endCoords, Direction.Right);
 
             return paths;
         }
 
-        private static void FollowPath(Grid grid, List<IList<Coords>> paths, List<Coords> currentPath, Coords endCoords, Direction direction)
+        private static void FollowPath(Grid grid, Paths paths, Path currentPath, Coords endCoords, Direction direction)
         {
-            var line = string.Empty;
-            line += "currentPath: ";
-            var coordsAsStrings = currentPath.Select(coords => coords.ToString());
-            line += string.Join(", ", coordsAsStrings);
-            line += "; direction: ";
-            line += direction.ToString();
-            System.Diagnostics.Debug.WriteLine(line);
-
-            var lastCoords = currentPath.Last();
-            Coords nextCoords;
-
-            switch (direction)
-            {
-                case Direction.Up:
-                    nextCoords = new Coords(lastCoords.X, lastCoords.Y + 1);
-                    break;
-                case Direction.Down:
-                    nextCoords = new Coords(lastCoords.X, lastCoords.Y - 1);
-                    break;
-                case Direction.Left:
-                    nextCoords = new Coords(lastCoords.X - 1, lastCoords.Y);
-                    break;
-                case Direction.Right:
-                    nextCoords = new Coords(lastCoords.X + 1, lastCoords.Y);
-                    break;
-                default:
-                    throw new InvalidOperationException("Unknown direction");
-            }
+            var nextCoords = currentPath.GetNextCoords(direction);
 
             if (nextCoords.Equals(endCoords))
             {
-                currentPath.Add(nextCoords);
-                // TODO: check for duplicate paths
-                paths.Add(currentPath);
+                currentPath.AddCoords(nextCoords);
+                paths.AddPath(currentPath);
                 return;
             }
 
-            if (PathContainsCoords(currentPath, nextCoords))
+            if (currentPath.ContainsCoords(nextCoords))
             {
                 return;
             }
 
-            if (CoordsAreOffTheGrid(grid, nextCoords))
+            if (grid.CoordsAreOffTheGrid(nextCoords))
             {
                 return;
             }
@@ -72,7 +43,7 @@ namespace FlowFreeDlx
                 return;
             }
 
-            currentPath.Add(nextCoords);
+            currentPath.AddCoords(nextCoords);
 
             var allDirections = Enum.GetValues(typeof(Direction)).Cast<Direction>();
             var oppositeDirection = direction.Opposite();
@@ -80,20 +51,8 @@ namespace FlowFreeDlx
 
             foreach (var directionToTry in directionsToTry)
             {
-                var copyOfCurrentPath = new List<Coords>();
-                copyOfCurrentPath.AddRange(currentPath);
-                FollowPath(grid, paths, copyOfCurrentPath, endCoords, directionToTry);
+                FollowPath(grid, paths, Path.CopyOfPath(currentPath), endCoords, directionToTry);
             }
-        }
-
-        private static bool PathContainsCoords(IEnumerable<Coords> path, Coords coords)
-        {
-            return path.Any(c => c.Equals(coords));
-        }
-
-        private static bool CoordsAreOffTheGrid(Grid grid, Coords coords)
-        {
-            return coords.X < 0 || coords.X >= grid.Width || coords.Y < 0 || coords.Y >= grid.Height;
         }
     }
 }

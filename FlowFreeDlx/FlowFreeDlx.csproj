@@ -44,7 +44,9 @@
     <Compile Include="Direction.cs" />
     <Compile Include="DirectionExtensions.cs" />
     <Compile Include="Grid.cs" />
+    <Compile Include="Path.cs" />
     <Compile Include="PathFinder.cs" />
+    <Compile Include="Paths.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

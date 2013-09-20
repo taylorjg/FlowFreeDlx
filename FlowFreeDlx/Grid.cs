@@ -52,7 +52,7 @@ namespace FlowFreeDlx
                             break;
 
                         default:
-                            throw new InvalidOperationException(string.Format("Invalid character in initStrings, '{0}'.", ch));
+                            throw new InvalidOperationException(String.Format("Invalid character in initStrings, '{0}'.", ch));
                     }
                 }
             }
@@ -61,6 +61,15 @@ namespace FlowFreeDlx
         public bool IsCellOccupied(Coords coords)
         {
             return _cells[coords.X, coords.Y] != null;
+        }
+
+        public bool CoordsAreOffTheGrid(Coords coords)
+        {
+            return
+                coords.X < 0 ||
+                coords.Y < 0 ||
+                coords.X >= Width ||
+                coords.Y >= Height;
         }
     }
 }

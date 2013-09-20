@@ -1,4 +1,5 @@
-﻿using FlowFreeDlx;
+﻿using System.Linq;
+using FlowFreeDlx;
 using NUnit.Framework;
 
 namespace FlowFreeDlxTests
@@ -16,10 +17,25 @@ namespace FlowFreeDlxTests
                 };
 
             var grid = new Grid(initStrings);
-            var paths = PathFinder.FindAllPaths(grid, new Coords(0, 1), new Coords(1, 0));
-            Assert.That(paths.Count, Is.EqualTo(2));
-            Assert.That(paths, Contains.Item(new[]{ new Coords(0, 1), new Coords(0, 0), new Coords(1, 0)}));
-            Assert.That(paths, Contains.Item(new[]{ new Coords(0, 1), new Coords(1, 1), new Coords(1, 0)}));
+            var startCoords = new Coords(0, 1);
+            var endCoords = new Coords(1, 0);
+            var paths = PathFinder.FindAllPaths(grid, startCoords, endCoords);
+            var pathList = paths.PathList.ToList();
+
+            Assert.That(pathList.Count, Is.EqualTo(2));
+
+            var expectedPath1 = new Path();
+            expectedPath1.AddCoords(startCoords);
+            expectedPath1.AddCoords(new Coords(0, 0));
+            expectedPath1.AddCoords(endCoords);
+
+            var expectedPath2 = new Path();
+            expectedPath2.AddCoords(startCoords);
+            expectedPath2.AddCoords(new Coords(1, 1));
+            expectedPath2.AddCoords(endCoords);
+
+            Assert.That(paths.ContainsPath(expectedPath1), Is.True);
+            Assert.That(paths.ContainsPath(expectedPath2), Is.True);
         }
     }
 }

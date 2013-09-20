@@ -2,7 +2,7 @@
 
 namespace FlowFreeDlx
 {
-    internal static class DirectionExtensions
+    public static class DirectionExtensions
     {
         public static Direction Opposite(this Direction direction)
         {
