@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlowFreeDlx", "FlowFreeDlx\FlowFreeDlx.csproj", "{E1BAC8AA-AFFB-4B23-BE86-86031360A2A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlowFreeDlxTests", "FlowFreeDlxTests\FlowFreeDlxTests.csproj", "{B4111105-C1FE-4CEB-B716-F615726BF231}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{21EC9888-EF6B-4709-8819-8EB0593FD6E2}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E1BAC8AA-AFFB-4B23-BE86-86031360A2A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1BAC8AA-AFFB-4B23-BE86-86031360A2A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1BAC8AA-AFFB-4B23-BE86-86031360A2A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1BAC8AA-AFFB-4B23-BE86-86031360A2A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4111105-C1FE-4CEB-B716-F615726BF231}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4111105-C1FE-4CEB-B716-F615726BF231}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4111105-C1FE-4CEB-B716-F615726BF231}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4111105-C1FE-4CEB-B716-F615726BF231}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
