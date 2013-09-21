@@ -1,56 +1,38 @@
 ﻿using System;
-using System.Linq;
+using System.Collections.Generic;
 
 namespace FlowFreeDlx
 {
     public class Grid
     {
-        private readonly string[,] _cells;
         public int Width { get; private set; }
         public int Height { get; private set; }
+        public IEnumerable<ColourPair> ColourPairs { get; private set; }
+        private readonly string[,] _cells;
 
-        public Grid(string[] initStrings)
+        public Grid(int width, int height, params ColourPair[] colourPairs)
         {
-            if (initStrings.Length == 0)
+            Width = width;
+            Height = height;
+            ColourPairs = colourPairs;
+            _cells = new string[Width, Height];
+
+            foreach (var colourPair in colourPairs)
             {
-                throw new ArgumentException("At least one initialisation string must be provided.", "initStrings");
-            }
-
-            Width = initStrings[0].Length;
-            Height = initStrings.Length;
-
-            if (initStrings.Any(s => s.Length != Width))
-            {
-                throw new ArgumentException("Initialisation strings must all have the same length.", "initStrings");
-            }
-
-            _cells = new string[Width,Height];
-
-            for (var y = 0; y < Height; y++)
-            {
-                var s = initStrings[y];
-
-                for (var x = 0; x < Width; x++)
+                switch (colourPair.Tag)
                 {
-                    var ch = s[x];
-                    switch (ch)
-                    {
-                        case ' ':
-                        case '-':
-                            break;
+                    case "A":
+                    case "B":
+                    case "C":
+                    case "D":
+                    case "E":
+                    case "F":
+                        _cells[colourPair.StartCoords.X, colourPair.StartCoords.Y] = colourPair.Tag;
+                        _cells[colourPair.EndCoords.X, colourPair.EndCoords.Y] = colourPair.Tag;
+                        break;
 
-                        case 'A':
-                        case 'B':
-                        case 'C':
-                        case 'D':
-                        case 'E':
-                        case 'F':
-                            _cells[x, Height - y - 1] = Convert.ToString(ch);
-                            break;
-
-                        default:
-                            throw new InvalidOperationException(String.Format("Invalid character in initStrings, '{0}'.", ch));
-                    }
+                    default:
+                        throw new InvalidOperationException(String.Format("Unknown tag, '{0}'.", colourPair.Tag));
                 }
             }
         }
@@ -60,7 +42,7 @@ namespace FlowFreeDlx
             return _cells[coords.X, coords.Y] != null;
         }
 
-        public string CellContents(Coords coords)
+        public string GetTagAtCoords(Coords coords)
         {
             return _cells[coords.X, coords.Y];
         }

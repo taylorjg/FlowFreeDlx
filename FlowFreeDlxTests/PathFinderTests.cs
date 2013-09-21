@@ -10,15 +10,16 @@ namespace FlowFreeDlxTests
         [Test]
         public void CanFindAllPathsOfSimpleGrid()
         {
-            var initStrings = new[]
-                {
-                    "A ",
-                    " A"
-                };
-
-            var grid = new Grid(initStrings);
             var startCoords = new Coords(0, 1);
             var endCoords = new Coords(1, 0);
+
+            // "A "
+            // " A"
+            var grid = new Grid(2, 2, new[]
+                {
+                    new ColourPair(startCoords, endCoords, "A")
+                });
+
             var paths = PathFinder.FindAllPaths(grid, startCoords, endCoords);
             var pathList = paths.PathList.ToList();
 

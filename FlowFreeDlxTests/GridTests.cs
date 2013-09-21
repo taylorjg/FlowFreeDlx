@@ -7,15 +7,14 @@ namespace FlowFreeDlxTests
     internal class GridTests
     {
         [Test]
-        public void CanConstructSimpleGridFromInitStrings()
+        public void CanConstructSimpleGridFromColourPairs()
         {
-            var initStrings = new[]
+            // "A  "
+            // "  A"
+            var grid = new Grid(3, 2, new[]
                 {
-                    "A  ",
-                    "  A"
-                };
-
-            var grid = new Grid(initStrings);
+                    new ColourPair(new Coords(0, 1), new Coords(2, 0), "A")
+                });
 
             Assert.That(grid.IsCellOccupied(new Coords(0, 0)), Is.False);
             Assert.That(grid.IsCellOccupied(new Coords(1, 0)), Is.False);

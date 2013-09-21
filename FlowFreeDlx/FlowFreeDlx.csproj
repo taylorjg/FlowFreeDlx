@@ -40,11 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ColourPair.cs" />
     <Compile Include="Coords.cs" />
     <Compile Include="Direction.cs" />
     <Compile Include="DirectionExtensions.cs" />
     <Compile Include="Grid.cs" />
     <Compile Include="GridPrinter.cs" />
+    <Compile Include="MatrixBuilder.cs" />
     <Compile Include="Path.cs" />
     <Compile Include="PathFinder.cs" />
     <Compile Include="Paths.cs" />

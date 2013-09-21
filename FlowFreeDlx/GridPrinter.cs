@@ -4,7 +4,7 @@ namespace FlowFreeDlx
 {
     public class GridPrinter
     {
-        public void Print(Grid grid)
+        public static void Print(Grid grid)
         {
             // Note that the outer loop iterates over the rows rather than the columns
             // because it is easier to build the lines this way. Also, we regard (0,0)
@@ -22,11 +22,10 @@ namespace FlowFreeDlx
                 {
                     Console.Write("|");
 
-                    var cellContents = grid.CellContents(new Coords(x, y));
-                    if (cellContents != null)
+                    var tag = grid.GetTagAtCoords(new Coords(x, y));
+                    if (tag != null)
                     {
-                        var ch = cellContents[0];
-                        DrawCellContaining(ch);
+                        DrawCellContaining(tag);
                     }
                     else
                     {
@@ -54,13 +53,13 @@ namespace FlowFreeDlx
             return rowDivider;
         }
 
-        private static void DrawCellContaining(char ch)
+        private static void DrawCellContaining(string tag)
         {
-            var consoleColour = MapCharToConsoleColour(ch);
+            var consoleColour = MapTagToConsoleColour(tag);
 
             WriteToConsoleInColour(
                 consoleColour,
-                () => Console.Write(" {0} ", ch));
+                () => Console.Write(" {0} ", tag));
         }
 
         private static void DrawEmptyCell()
@@ -68,24 +67,24 @@ namespace FlowFreeDlx
             Console.Write(new string(' ', 3));
         }
 
-        private static ConsoleColor MapCharToConsoleColour(char ch)
+        private static ConsoleColor MapTagToConsoleColour(string tag)
         {
-            switch (ch)
+            switch (tag)
             {
-                case 'A':
+                case "A":
                     return ConsoleColor.Blue;
-                case 'B':
+                case "B":
                     return ConsoleColor.Magenta;
-                case 'C':
+                case "C":
                     return ConsoleColor.Red;
-                case 'D':
+                case "D":
                     return ConsoleColor.Green;
-                case 'E':
+                case "E":
                     return ConsoleColor.Cyan;
-                case 'F':
+                case "F":
                     return ConsoleColor.Yellow;
                 default:
-                    throw new InvalidOperationException(string.Format("Unknown ch, '{0}'.", ch));
+                    throw new InvalidOperationException(string.Format("Unknown tag, '{0}'.", tag));
             }
         }
 
