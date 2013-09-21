@@ -1,4 +1,7 @@
-﻿using FlowFreeDlx;
+﻿using System;
+using System.Linq;
+using DlxLib;
+using FlowFreeDlx;
 
 namespace FlowFreeDlxApp
 {
@@ -17,6 +20,19 @@ namespace FlowFreeDlxApp
                 });
 
             GridPrinter.Print(grid);
+
+            var matrixBuilder = new MatrixBuilder();
+            var matrix = matrixBuilder.BuildMatrixFor(grid);
+
+            var dlx = new Dlx();
+            var solutions = dlx.Solve(matrix);
+
+            foreach (var solution in solutions)
+            {
+                var solvedGrid = new Grid(7, 7, solution.RowIndexes.Select(matrixBuilder.GetColourPairAndPathForRowIndex).ToArray());
+                Console.WriteLine();
+                GridPrinter.Print(solvedGrid);
+            }
         }
     }
 }

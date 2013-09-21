@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace FlowFreeDlx
 {
@@ -19,21 +20,45 @@ namespace FlowFreeDlx
 
             foreach (var colourPair in colourPairs)
             {
-                switch (colourPair.Tag)
-                {
-                    case "A":
-                    case "B":
-                    case "C":
-                    case "D":
-                    case "E":
-                    case "F":
-                        _cells[colourPair.StartCoords.X, colourPair.StartCoords.Y] = colourPair.Tag;
-                        _cells[colourPair.EndCoords.X, colourPair.EndCoords.Y] = colourPair.Tag;
-                        break;
+                SetCellContents(colourPair.StartCoords, colourPair);
+                SetCellContents(colourPair.EndCoords, colourPair);
+            }
+        }
 
-                    default:
-                        throw new InvalidOperationException(String.Format("Unknown tag, '{0}'.", colourPair.Tag));
+        public Grid(int width, int height, params Tuple<ColourPair, Path>[] colourPairPaths)
+        {
+            Width = width;
+            Height = height;
+            ColourPairs = colourPairPaths.Select(cpp => cpp.Item1);
+            _cells = new string[Width, Height];
+
+            foreach (var tuple in colourPairPaths)
+            {
+                var colourPair = tuple.Item1;
+                var path = tuple.Item2;
+
+                foreach (var coords in path.CoordsList)
+                {
+                    SetCellContents(coords, colourPair);
                 }
+            }
+        }
+
+        private void SetCellContents(Coords coords, ColourPair colourPair)
+        {
+            switch (colourPair.Tag)
+            {
+                case "A":
+                case "B":
+                case "C":
+                case "D":
+                case "E":
+                case "F":
+                    _cells[coords.X, coords.Y] = colourPair.Tag;
+                    break;
+
+                default:
+                    throw new InvalidOperationException(String.Format("Unknown tag, '{0}'.", colourPair.Tag));
             }
         }
 
