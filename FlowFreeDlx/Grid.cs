@@ -45,10 +45,6 @@ namespace FlowFreeDlx
                         case 'D':
                         case 'E':
                         case 'F':
-                        case 'G':
-                        case 'H':
-                        case 'I':
-                        case 'J':
                             _cells[x, Height - y - 1] = Convert.ToString(ch);
                             break;
 

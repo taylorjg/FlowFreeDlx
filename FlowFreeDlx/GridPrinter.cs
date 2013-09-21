@@ -26,18 +26,15 @@ namespace FlowFreeDlx
                     if (cellContents != null)
                     {
                         var ch = cellContents[0];
-                        ChangeConsoleForegroundColorIf(
-                            true,
-                            ConsoleColor.Blue,
-                            () => Console.Write(" {0} ", ch));
+                        DrawCellContaining(ch);
                     }
                     else
                     {
-                        Console.Write(new string(' ', 3));
+                        DrawEmptyCell();
                     }
                 }
-                Console.Write("|");
-                Console.WriteLine();
+
+                Console.WriteLine("|");
             }
 
             Console.WriteLine(rowDivider);
@@ -57,38 +54,47 @@ namespace FlowFreeDlx
             return rowDivider;
         }
 
-        // Black
-        // Blue
-        // Cyan
-        // DarkBlue
-        // DarkCyan
-        // DarkGray
-        // DarkGreen
-        // DarkMagenta
-        // DarkRed
-        // DarkYellow
-        // Gray
-        // Green
-        // Magenta
-        // Red
-        // White
-        // Yellow
+        private static void DrawCellContaining(char ch)
+        {
+            var consoleColour = MapCharToConsoleColour(ch);
 
-        private static void ChangeConsoleForegroundColorIf(bool condition, ConsoleColor consoleColor, Action action)
+            WriteToConsoleInColour(
+                consoleColour,
+                () => Console.Write(" {0} ", ch));
+        }
+
+        private static void DrawEmptyCell()
+        {
+            Console.Write(new string(' ', 3));
+        }
+
+        private static ConsoleColor MapCharToConsoleColour(char ch)
+        {
+            switch (ch)
+            {
+                case 'A':
+                    return ConsoleColor.Blue;
+                case 'B':
+                    return ConsoleColor.Magenta;
+                case 'C':
+                    return ConsoleColor.Red;
+                case 'D':
+                    return ConsoleColor.Green;
+                case 'E':
+                    return ConsoleColor.Cyan;
+                case 'F':
+                    return ConsoleColor.Yellow;
+                default:
+                    throw new InvalidOperationException(string.Format("Unknown ch, '{0}'.", ch));
+            }
+        }
+
+        private static void WriteToConsoleInColour(ConsoleColor consoleColor, Action action)
         {
             var oldForegroundColor = Console.ForegroundColor;
-
-            if (condition)
-            {
-                Console.ForegroundColor = consoleColor;
-            }
-
+            Console.ForegroundColor = consoleColor;
             action();
-
-            if (condition)
-            {
-                Console.ForegroundColor = oldForegroundColor;
-            }
+            Console.ForegroundColor = oldForegroundColor;
         }
     }
 }
