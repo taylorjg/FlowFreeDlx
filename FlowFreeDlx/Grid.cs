@@ -36,6 +36,7 @@ namespace FlowFreeDlx
                     switch (ch)
                     {
                         case ' ':
+                        case '-':
                             break;
 
                         case 'A':
@@ -61,6 +62,11 @@ namespace FlowFreeDlx
         public bool IsCellOccupied(Coords coords)
         {
             return _cells[coords.X, coords.Y] != null;
+        }
+
+        public string CellContents(Coords coords)
+        {
+            return _cells[coords.X, coords.Y];
         }
 
         public bool CoordsAreOffTheGrid(Coords coords)

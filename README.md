@@ -5,6 +5,8 @@ This little project aims to solve Flow Free puzzles via my DlxLib.
 
 ## Example Puzzle
 
+![Flow Free Screenshot](http://a5.mzstatic.com/eu/r30/Purple/v4/ee/f2/15/eef2159e-9995-4b45-f93f-667aa4522540/screen480x480.jpeg "Flow Free Screenshot")
+
 Example 7x7 puzzle:
 
 ```
@@ -35,7 +37,7 @@ Each letter represents a colour
 * B: Orange
 * C: Red
 * D: Green
-* E: Turquoise
+* E: Cyan
 * F: Yellow
 
 ## Links
