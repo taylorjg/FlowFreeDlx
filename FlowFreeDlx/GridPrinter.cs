@@ -1,14 +1,9 @@
-﻿namespace FlowFreeDlx
+﻿using System;
+
+namespace FlowFreeDlx
 {
     public class GridPrinter
     {
-        private readonly IPrintTarget _printTarget;
-
-        public GridPrinter(IPrintTarget printTarget)
-        {
-            _printTarget = printTarget;
-        }
-
         public void Print(Grid grid)
         {
             // Note that the outer loop iterates over the rows rather than the columns
@@ -20,36 +15,35 @@
 
             for (var y = grid.Height - 1; y >= 0; y--)
             {
-
-                _printTarget.PrintLine(rowDivider);
-
-                var line = string.Empty;
+                Console.WriteLine(rowDivider);
 
                 // The inner loop iterates over the columns.
                 for (var x = 0; x < grid.Width; x++)
                 {
-                    line += "|";
+                    Console.Write("|");
 
                     var cellContents = grid.CellContents(new Coords(x, y));
                     if (cellContents != null)
                     {
                         var ch = cellContents[0];
-                        line += string.Format(" {0} ", ch);
+                        ChangeConsoleForegroundColorIf(
+                            true,
+                            ConsoleColor.Blue,
+                            () => Console.Write(" {0} ", ch));
                     }
                     else
                     {
-                        line += new string(' ', 3);
+                        Console.Write(new string(' ', 3));
                     }
                 }
-                line += "|";
-
-                _printTarget.PrintLine(line);
+                Console.Write("|");
+                Console.WriteLine();
             }
 
-            _printTarget.PrintLine(rowDivider);
+            Console.WriteLine(rowDivider);
         }
 
-        public string GetRowDivider(Grid grid)
+        private static string GetRowDivider(Grid grid)
         {
             var rowDivider = string.Empty;
 
@@ -61,6 +55,40 @@
             rowDivider += "+";
 
             return rowDivider;
+        }
+
+        // Black
+        // Blue
+        // Cyan
+        // DarkBlue
+        // DarkCyan
+        // DarkGray
+        // DarkGreen
+        // DarkMagenta
+        // DarkRed
+        // DarkYellow
+        // Gray
+        // Green
+        // Magenta
+        // Red
+        // White
+        // Yellow
+
+        private static void ChangeConsoleForegroundColorIf(bool condition, ConsoleColor consoleColor, Action action)
+        {
+            var oldForegroundColor = Console.ForegroundColor;
+
+            if (condition)
+            {
+                Console.ForegroundColor = consoleColor;
+            }
+
+            action();
+
+            if (condition)
+            {
+                Console.ForegroundColor = oldForegroundColor;
+            }
         }
     }
 }

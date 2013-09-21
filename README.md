@@ -1,7 +1,7 @@
 
 ## Overview
 
-This little project aims to solve Flow Free puzzles via my DlxLib.
+This little project aims to solve [Flow Free](https://itunes.apple.com/gb/app/flow-free/id526641427 "Flow Free") puzzles using my [DlxLib](https://github.com/taylorjg/DlxLib "DlxLib").
 
 ## Example Puzzle
 

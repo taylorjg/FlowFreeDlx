@@ -19,7 +19,7 @@ namespace FlowFreeDlxApp
 
             var grid = new Grid(initStrings);
 
-            var gridPrinter = new GridPrinter(new ConsolePrintTarget());
+            var gridPrinter = new GridPrinter();
             gridPrinter.Print(grid);
         }
     }
