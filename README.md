@@ -40,6 +40,10 @@ Each letter represents a colour
 * E: Cyan
 * F: Yellow
 
+## Screenshot
+
+![Screenshot](https://raw.github.com/taylorjg/FlowFreeDlx/master/Images/Screenshot.png "Screenshot")
+
 ## Links
 
 * [Flow Free](https://itunes.apple.com/gb/app/flow-free/id526641427 "Flow Free")
