@@ -9,15 +9,15 @@ namespace FlowFreeDlx
         {
             var paths = new Paths();
 
-            FollowPath(grid, paths, Path.PathWithStartingPoint(startCoords), endCoords, Direction.Up);
-            FollowPath(grid, paths, Path.PathWithStartingPoint(startCoords), endCoords, Direction.Down);
-            FollowPath(grid, paths, Path.PathWithStartingPoint(startCoords), endCoords, Direction.Left);
-            FollowPath(grid, paths, Path.PathWithStartingPoint(startCoords), endCoords, Direction.Right);
+            FollowPath(grid, paths, Path.PathWithStartingPoint(startCoords), endCoords, Direction.Up, 0);
+            FollowPath(grid, paths, Path.PathWithStartingPoint(startCoords), endCoords, Direction.Down, 0);
+            FollowPath(grid, paths, Path.PathWithStartingPoint(startCoords), endCoords, Direction.Left, 0);
+            FollowPath(grid, paths, Path.PathWithStartingPoint(startCoords), endCoords, Direction.Right, 0);
 
             return paths;
         }
 
-        private static void FollowPath(Grid grid, Paths paths, Path currentPath, Coords endCoords, Direction direction)
+        private static void FollowPath(Grid grid, Paths paths, Path currentPath, Coords endCoords, Direction direction, int numDirectionChanges)
         {
             var nextCoords = currentPath.GetNextCoords(direction);
 
@@ -49,9 +49,16 @@ namespace FlowFreeDlx
             var oppositeDirection = direction.Opposite();
             var directionsToTry = allDirections.Where(d => d != oppositeDirection);
 
+            var numEmptyCells = (grid.Width * grid.Height) - (grid.ColourPairs.Count() * 2);
+            var maxDirectionChanges = numEmptyCells / 3;
+
             foreach (var directionToTry in directionsToTry)
             {
-                FollowPath(grid, paths, Path.CopyOfPath(currentPath), endCoords, directionToTry);
+                var newNumDirectionChanges = numDirectionChanges + (directionToTry != direction ? 1 : 0);
+                if (newNumDirectionChanges <= maxDirectionChanges)
+                {
+                    FollowPath(grid, paths, Path.CopyOfPath(currentPath), endCoords, directionToTry, newNumDirectionChanges);
+                }
             }
         }
     }

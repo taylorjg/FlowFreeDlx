@@ -22,10 +22,17 @@ namespace FlowFreeDlxApp
             GridPrinter.Print(grid);
 
             var matrixBuilder = new MatrixBuilder();
+            Log("Before matrixBuilder.BuildMatrixFor()");
             var matrix = matrixBuilder.BuildMatrixFor(grid);
+            Log("After matrixBuilder.BuildMatrixFor()");
+
+            Log(string.Format("matrix.GetLength(0): {0}", matrix.GetLength(0)));
+            Log(string.Format("matrix.GetLength(1): {0}", matrix.GetLength(1)));
 
             var dlx = new Dlx();
+            Log("Before dlx.Solve()");
             var solutions = dlx.Solve(matrix);
+            Log("After dlx.Solve()");
 
             foreach (var solution in solutions)
             {
@@ -33,6 +40,12 @@ namespace FlowFreeDlxApp
                 Console.WriteLine();
                 GridPrinter.Print(solvedGrid);
             }
+        }
+
+        private static void Log(string message)
+        {
+            var timestamp = DateTime.Now.ToString("HH:mm:ss.fff");
+            Console.WriteLine("{0}: {1}", timestamp, message);
         }
     }
 }
