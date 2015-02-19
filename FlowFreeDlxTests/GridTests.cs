@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace FlowFreeDlxTests
 {
     [TestFixture]
-    internal class GridTests
+    public class GridTests
     {
         [Test]
         public void CanConstructSimpleGridFromColourPairs()

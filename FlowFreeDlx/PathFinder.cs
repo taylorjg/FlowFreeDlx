@@ -50,7 +50,7 @@ namespace FlowFreeDlx
             var directionsToTry = allDirections.Where(d => d != oppositeDirection);
 
             var numEmptyCells = (grid.Width * grid.Height) - (grid.ColourPairs.Count() * 2);
-            var maxDirectionChanges = numEmptyCells / 3;
+            var maxDirectionChanges = Math.Max(1, numEmptyCells / 5);
 
             foreach (var directionToTry in directionsToTry)
             {

@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace FlowFreeDlxTests
 {
     [TestFixture]
-    internal class PathsTests
+    public class PathsTests
     {
         [Test]
         public void CanDetectWhetherPathsContainsAGivenPath()

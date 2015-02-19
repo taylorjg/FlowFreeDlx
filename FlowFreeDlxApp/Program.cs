@@ -34,6 +34,7 @@ namespace FlowFreeDlxApp
             var solutions = dlx.Solve(matrix);
             Log("After dlx.Solve()");
 
+            // ReSharper disable once LoopCanBePartlyConvertedToQuery
             foreach (var solution in solutions)
             {
                 var solvedGrid = new Grid(7, 7, solution.RowIndexes.Select(matrixBuilder.GetColourPairAndPathForRowIndex).ToArray());

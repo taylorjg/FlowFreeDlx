@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace FlowFreeDlxTests
 {
     [TestFixture]
-    class PathFinderTests
+    public class PathFinderTests
     {
         [Test]
         public void CanFindAllPathsOfSimpleGrid()
@@ -15,10 +15,7 @@ namespace FlowFreeDlxTests
 
             // "A "
             // " A"
-            var grid = new Grid(2, 2, new[]
-                {
-                    new ColourPair(startCoords, endCoords, "A")
-                });
+            var grid = new Grid(2, 2, new ColourPair(startCoords, endCoords, "A"));
 
             var paths = PathFinder.FindAllPaths(grid, startCoords, endCoords);
             var pathList = paths.PathList.ToList();
